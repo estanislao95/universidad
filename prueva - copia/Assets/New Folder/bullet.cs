@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class bullet : MonoBehaviour
 {
 
@@ -9,6 +10,7 @@ public class bullet : MonoBehaviour
 
     public float timer;
 
+    public int damage = 0;
 
 
     // Update is called once per frame
@@ -45,6 +47,7 @@ public class bullet : MonoBehaviour
 
         if (myenemy != null)
         {
+            myenemy.life -= damage;
             Destroy(this.gameObject);
 
         }

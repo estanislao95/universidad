@@ -10,6 +10,12 @@ public class move : MonoBehaviour
     public Rigidbody rigid;
     public float jumpspeed = 10;
 
+    public float maxlife = 0;
+    public float currentlife = 0;
+
+    public float maxarmor = 0;
+    public float currentarmor = 0;
+
     [HideInInspector]
     public bool isjump = true;
     [HideInInspector]
@@ -26,12 +32,16 @@ public class move : MonoBehaviour
     public int jumpamount = 0;
 
 
-    public Text text;
+    public Image lifebar;
+    public Image armor;
+
 
     // Start is called before the first frame update
     void Start()
     {
-        text.text = ("1");
+        currentlife = maxlife;
+        currentarmor = maxarmor;
+
     }
 
     // Update is called once per frame
@@ -40,16 +50,13 @@ public class move : MonoBehaviour
         movement();
         jumplogic();
 
+        currentlife = currentlife > maxlife ? maxlife : currentlife;
+        currentarmor = currentarmor > maxarmor ? maxarmor : currentarmor;
 
 
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            text.text = ("1");
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            text.text = ("2");
-        }
+        lifebar.fillAmount = (currentlife / maxlife);
+        armor.fillAmount = (currentarmor / maxarmor);
+
 
 
 
@@ -60,11 +67,14 @@ public class move : MonoBehaviour
     void movement()
     {
 
+
         Vector3 inputVector;
 
         inputVector.x = Input.GetAxis("Horizontal");
         inputVector.y = Input.GetAxis("Vertical");
         inputVector.z = 0f;
+
+ 
 
         if (speedboost == 1)
         {
@@ -78,12 +88,18 @@ public class move : MonoBehaviour
         }
 
         //transform.position += inputVector * walkpseed * Time.deltaTime;
-        transform.position += (transform.right * inputVector.y //+
-                               //transform.forward * inputVector.x
-                               ) 
-                               * walkpseed * Time.deltaTime;
+        // transform.position += (transform.right * inputVector.y //+
+        //                        //transform.forward * inputVector.x
+        //                        ) 
+        //                        * walkpseed * Time.deltaTime;
 
-        transform.Rotate(0,inputVector.x * roatationspeed * Time.deltaTime, 0);
+        rigid.MovePosition(rigid.position + (transform.right
+                           * inputVector.y + transform.forward * inputVector.z)
+                           * walkpseed * Time.deltaTime);
+
+
+        rigid.MoveRotation(rigid.rotation * Quaternion.Euler(0,inputVector.x * 
+                                            roatationspeed * Time.deltaTime,0));    
     }
 
     void jumplogic()

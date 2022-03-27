@@ -19,18 +19,18 @@ public class basicenemy : MonoBehaviour
 
     }
 
-    private void OnTriggerEnter(Collider collision)
-    {
-        bullet bullety = collision.GetComponent<bullet>();
-
-        if (bullety != null)
-        {
-            life -= 10;
-
-        }
-
-
-    }
+  // private void OnTriggerEnter(Collider collision)
+  // {
+  //     bullet bullety = collision.GetComponent<bullet>();
+  //
+  //     if (bullety != null)
+  //     {
+  //         life -= 10;
+  //
+  //     }
+  //
+  //
+  // }
 
 
 
